@@ -1,17 +1,19 @@
 #include "arrayUtil.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 ArrayUtil create(int typeSize, int length){
-  ArrayUtil *array;
-  array = (ArrayUtil *)calloc(length, typeSize);;
-  array->base = array;
-  array->length = length;
-  array->typeSize = typeSize;
-  return *array;
+  ArrayUtil *new;
+  new = (ArrayUtil *)malloc(sizeof(ArrayUtil));
+  new->base = calloc(length,typeSize);
+  new->length = length;
+  new->typeSize = typeSize;
+  return *new;
 }
 
 int areEqual(ArrayUtil a, ArrayUtil b){
-  if (a.typeSize == b.typeSize && a.length == b.length)
+  if (a.typeSize == b.typeSize && a.length == b.length && (memcmp(a.base,b.base,a.typeSize)==0))
     return 1;
   return 0;
 }
@@ -21,4 +23,19 @@ ArrayUtil resize(ArrayUtil util, int length){
   new = realloc(util.base,length);
   new->length = length;
   return *new;
+}
+
+void dispose(ArrayUtil util){
+  free(util.base);
+}
+
+int findIndex(ArrayUtil util,void *element){
+  void *base = (void *)util.base;
+   for (int index = 0; index < util.length; index++) {
+     if (memcmp(base,element,util.typeSize)==0) {
+       return index;
+     }
+     base+=util.typeSize;
+   }
+   return -1;
 }
