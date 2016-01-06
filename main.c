@@ -41,7 +41,7 @@ int isDivisible(void* hint, void* item){
   return 0;
 }
 
-void test_findFirst() {
+void test_findFirst_if_value_exist() {
   int hint = 3;
   ArrayUtil a = create(sizeof(int),5);
   int *new = (int *)a.base;
@@ -50,6 +50,17 @@ void test_findFirst() {
   new[3] = 18;
   int *result = findFirst(a,&isDivisible,&hint);
   assert(21 == *result);
+}
+void test_findFirst_if_value_not_exist() {
+  int hint = 3;
+  ArrayUtil a = create(sizeof(int),5);
+  int *new = (int *)a.base;
+  new[0] = 10;
+  new[1] = 25;
+  new[2] = 20;
+  new[3] = 11;
+  int *result = findFirst(a,&isDivisible,&hint);
+  assert(NULL == result);
 }
 void test_findLast() {
   int hint = 3;
@@ -78,7 +89,7 @@ int main(void) {
   test_areEqual();
   test_resize();
   test_findIndex();
-  test_findFirst();
+  test_findFirst_if_value_exist();
   test_findLast();
   test_count();
   return 0;

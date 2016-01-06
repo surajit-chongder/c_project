@@ -55,7 +55,6 @@ void* findLast(ArrayUtil util, MatchFunc* match, void* hint){
     if (match(hint,base)==1){
       return base;
     }
-    printf("%p\n",base);
     base-=util.typeSize;
   }
   return NULL;
