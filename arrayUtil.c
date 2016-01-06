@@ -32,10 +32,43 @@ void dispose(ArrayUtil util){
 int findIndex(ArrayUtil util,void *element){
   void *base = (void *)util.base;
    for (int index = 0; index < util.length; index++) {
-     if (memcmp(base,element,util.typeSize)==0) {
+     if (memcmp(base,element,util.typeSize)==0)
        return index;
-     }
      base+=util.typeSize;
    }
    return -1;
+}
+
+void* findFirst(ArrayUtil util, MatchFunc* match, void* hint){
+  void *base = (void *)util.base;
+  for (int index = 0; index < util.length; index++) {
+    if (match(hint,base)==1){
+      return base;
+    }
+    base+=util.typeSize;
+  }
+  return NULL;
+}
+void* findLast(ArrayUtil util, MatchFunc* match, void* hint){
+  void *base = (void *)util.base + (util.length-1 * util.typeSize);
+  for (int index = 0; index < util.length; index++) {
+    if (match(hint,base)==1){
+      return base;
+    }
+    printf("%p\n",base);
+    base-=util.typeSize;
+  }
+  return NULL;
+}
+
+int count(ArrayUtil util, MatchFunc* match, void* hint){
+  int count = 0;
+  void *base = (void *)util.base;
+  for (int index = 0; index < util.length; index++) {
+    if (match(hint,base)==1){
+      count++;
+    }
+    base+=util.typeSize;
+  }
+  return count;
 }
