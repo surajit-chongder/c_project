@@ -60,7 +60,7 @@ void test_findFirst_if_value_not_exist() {
   new[2] = 20;
   new[3] = 11;
   int *result = findFirst(a,&isDivisible,&hint);
-  assert(NULL == result);
+  assert(0 == *result);
 }
 void test_findLast() {
   int hint = 3;
@@ -84,13 +84,32 @@ void test_count(){
   int result = count(a,&isDivisible,&hint);
   assert(3 == result);
 }
-int main(void) {
-  test_create();
-  test_areEqual();
-  test_resize();
-  test_findIndex();
-  test_findFirst_if_value_exist();
-  test_findLast();
-  test_count();
-  return 0;
+void test_filter_no_match_element() {
+  int hint = 3;
+  int maxItems = 4;
+  ArrayUtil a = create(sizeof(int),4);
+  int *new = (int *)a.base;
+  new[0] = 10;
+  new[1] = 20;
+  new[2] = 2;
+  new[3] = 11;
+  ArrayUtil b = create(sizeof(int),maxItems);
+  int result = filter(a,&isDivisible,&hint,b.base,maxItems);
+  assert(0 == result);
+}
+void test_filter_match_element() {
+  int hint = 3;
+  int maxItems = 4;
+  ArrayUtil a = create(sizeof(int),4);
+  int *new = (int *)a.base;
+  new[0] = 10;
+  new[1] = 21;
+  new[2] = 2;
+  new[3] = 18;
+  ArrayUtil b = create(sizeof(int*),maxItems);
+  int **newb = (int **)b.base;
+  int result = filter(a,&isDivisible,&hint,b.base,maxItems);
+  assert(2 == result);
+  assert(21 == *newb[0]);
+  assert(18 == *newb[1]);
 }

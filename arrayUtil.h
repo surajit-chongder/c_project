@@ -13,3 +13,4 @@ int findIndex(ArrayUtil,void*);
 void* findFirst(ArrayUtil,MatchFunc*,void*);
 void* findLast(ArrayUtil, MatchFunc* , void*);
 int count(ArrayUtil, MatchFunc* , void*);
+int filter(ArrayUtil, MatchFunc*,void*, void** ,int);

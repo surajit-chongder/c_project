@@ -38,7 +38,6 @@ int findIndex(ArrayUtil util,void *element){
    }
    return -1;
 }
-
 void* findFirst(ArrayUtil util, MatchFunc* match, void* hint){
   void *base = (void *)util.base;
   for (int index = 0; index < util.length; index++) {
@@ -71,3 +70,18 @@ int count(ArrayUtil util, MatchFunc* match, void* hint){
   }
   return count;
 }
+
+int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int maxItems ){
+  int count = 0;
+  void *base = (void *)util.base;
+  void **dest = destination;
+  for (int index = 0; index < util.length; index++) {
+    if (match(hint,base)==1 && count<maxItems){
+      *dest = base;
+      count++;
+      dest++;
+    }
+    base+=util.typeSize;
+  }
+  return count;
+};
