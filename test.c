@@ -3,6 +3,14 @@
 #include <assert.h>
 #include "arrayUtil.h"
 
+int isDivisible(void* hint, void* item){
+  int *h = (int *)hint;
+  int *i = (int *)item;
+  if (*i % *h == 0) {
+    return 1;
+  }
+  return 0;
+}
 void test_create(){
   ArrayUtil util = create(2,4);
   assert(util.length == 4);
@@ -31,14 +39,6 @@ void test_findIndex(){
   int num2 = 23;
   assert(findIndex(a,&num2)==1);
   assert(findIndex(a,&num1)==3);
-}
-int isDivisible(void* hint, void* item){
-  int *h = (int *)hint;
-  int *i = (int *)item;
-  if (*i % *h == 0) {
-    return 1;
-  }
-  return 0;
 }
 
 void test_findFirst_if_value_exist() {
@@ -112,4 +112,27 @@ void test_filter_match_element() {
   assert(2 == result);
   assert(21 == *newb[0]);
   assert(18 == *newb[1]);
+}
+void convert_plus(void* hint, void* sourceItem, void* destinationItem){
+  int *h = (int *)hint;
+  int *s = (int *)sourceItem;
+  int *dest = (int *)destinationItem;
+  int value = *h + *s;
+  *dest = value;
+}
+void test_map(){
+  int hint = 3;
+  ArrayUtil a = create(sizeof(int),4);
+  ArrayUtil b = create(sizeof(int),4);
+  int *newA = (int *)a.base;
+  newA[0] = 10;
+  newA[1] = 21;
+  newA[2] = 2;
+  newA[3] = 18;
+  int *newB = (int *)b.base;
+  map(a,b, &convert_plus,&hint);
+  assert(13 == newB[0]);
+  assert(24 == newB[1]);
+  assert(5 == newB[2]);
+  assert(21 == newB[3]);
 }

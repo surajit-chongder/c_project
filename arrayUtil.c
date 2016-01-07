@@ -84,4 +84,14 @@ int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int
     base+=util.typeSize;
   }
   return count;
-};
+}
+
+void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hint){
+  void *sourceBase = (void *)source.base;
+  void *destinationBase = (void *)destination.base;
+  for (int index = 0; index < source.length; index++) {
+        convert(hint,source.base,destination.base);
+        source.base+=source.typeSize;
+        destination.base+=destination.typeSize;    
+    }
+}
