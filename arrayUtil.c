@@ -90,8 +90,16 @@ void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hi
   void *sourceBase = (void *)source.base;
   void *destinationBase = (void *)destination.base;
   for (int index = 0; index < source.length; index++) {
-        convert(hint,source.base,destination.base);
-        source.base+=source.typeSize;
-        destination.base+=destination.typeSize;    
+        convert(hint,sourceBase,destinationBase);
+        sourceBase+=source.typeSize;
+        destinationBase+=destination.typeSize;
+    }
+}
+
+void forEach(ArrayUtil util, OperationFunc* operation, void* hint){
+  void *base = (void *)util.base;
+  for (int index = 0; index < util.length; index++) {
+        operation(hint,base);
+        base+=util.typeSize;
     }
 }

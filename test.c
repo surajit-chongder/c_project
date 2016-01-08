@@ -136,3 +136,32 @@ void test_map(){
   assert(5 == newB[2]);
   assert(21 == newB[3]);
 }
+
+void operation_minus(void* hint, void* item){
+  int *h = (int *)hint;
+  int *i = (int *)item;
+  int value = *i - *h;
+  *i = value;
+}
+void test_forEach(){
+  int hint = 3;
+  ArrayUtil a = create(sizeof(int),4);
+  int *newA = (int *)a.base;
+  newA[0] = 10;
+  newA[1] = 21;
+  newA[2] = 2;
+  newA[3] = 18;
+  forEach(a,&operation_minus,&hint);
+  assert(7 == newA[0]);
+  assert(18 == newA[1]);
+  assert(-1 == newA[2]);
+  assert(15 == newA[3]);
+}
+
+void* reduce_sum(void* hint, void* previousItem, void* item){
+  int *h = (int *)hint;
+  int *previous = (int *)previousItem;
+  int *i = (int *)item;
+  *previous+=*i;
+  return previous;
+}
