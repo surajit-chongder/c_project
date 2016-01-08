@@ -165,3 +165,20 @@ void* reduce_sum(void* hint, void* previousItem, void* item){
   *previous+=*i;
   return previous;
 }
+
+void test_reduce(){
+  int initialValue = 0;
+  int item = 10;
+  int previous = 2;
+  ArrayUtil a = create(sizeof(int),4);
+  int *newA = (int *)a.base;
+  newA[0] = 10;
+  newA[1] = 21;
+  newA[2] = 2;
+  newA[3] = 18;
+  int hint = 0;
+  void* result = reduce(a,&reduce_sum,&hint,&initialValue);
+  assert(51 == initialValue);
+  assert(*(int*)result == initialValue);
+  assert(result == &initialValue);
+}
