@@ -11,6 +11,7 @@ LinkedList createList(void){
   list->number_of_elements = 0;
   return *list;
 }
+
 int add_to_list(LinkedList *list,void *item){
   Element *e;
   e = (Element *)malloc(sizeof(Element));
@@ -25,4 +26,20 @@ int add_to_list(LinkedList *list,void *item){
   }
   list->number_of_elements = ++list->number_of_elements;
   return list->number_of_elements;
+}
+
+void *get_first_element(LinkedList list){
+  return list.head->value;
+}
+
+void *get_last_element(LinkedList list){
+  return list.tail->value;
+}
+
+void forEach(LinkedList list, ElementProcessor process){
+  Element *start = list.head;
+  while( start!= NULL ) {
+      process(start->value);
+			start = start->next;
+	}
 }

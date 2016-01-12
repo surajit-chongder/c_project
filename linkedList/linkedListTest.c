@@ -18,22 +18,58 @@ void test_add_to_list(){
   assert(*(int *)list.tail->value == 15);
   assert(list.number_of_elements == 1);
 }
-void listPrint (LinkedList list){
-  Element *start = list.head;
-  while( start!= NULL )  {
-			printf("%d\n",*(int *)start->value);
-			start = start->next;
-	}
-}
 void test_add_to_list_when_more_element(){
   int item = 15;
   int secondItem = 23;
   LinkedList list = createList();
   add_to_list(&list,&item);
   int result = add_to_list(&list,&secondItem);
-  listPrint(list);
   assert(*(int *)list.head->value == 15);
   assert(*(int *)list.tail->value == 23);
   assert(list.number_of_elements == 2);
   assert(result == 2);
+}
+void test_get_first_element(){
+  int item = 15;
+  int secondItem = 23;
+  LinkedList list = createList();
+  add_to_list(&list,&item);
+  add_to_list(&list,&secondItem);
+  int *result = get_first_element(list);
+  assert(*result == 15);
+}
+void test_get_last_element(){
+  int item = 15;
+  int secondItem = 23;
+  LinkedList list = createList();
+  add_to_list(&list,&item);
+  add_to_list(&list,&secondItem);
+  int *result = get_last_element(list);
+  assert(*result == 23);
+}
+
+void increment(void *item){
+  int *value = (int *)item;
+  *value =  ++(*value);
+}
+void printList (LinkedList list){
+  Element *start = list.head;
+  while( start!= NULL ) {
+    printf("%d\n",*(int*)start->value);
+			start = start->next;
+	}
+}
+
+void test_forEach(){
+  int item = 15;
+  int secondItem = 23;
+  int thirdItem = 29;
+  LinkedList list = createList();
+  add_to_list(&list,&item);
+  add_to_list(&list,&secondItem);
+  add_to_list(&list,&thirdItem);
+  forEach(list,&increment);
+  assert(*(int *)list.head->value == 16);
+  assert(*(int *)list.tail->value == 30);
+  assert(list.number_of_elements == 3);
 }
