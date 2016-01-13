@@ -104,3 +104,15 @@ void test_indexOf(){
   int result2 = indexOf(list,&searchElement);
   assert(result2 == -1);
 }
+
+void test_delete_element(){
+  int item = 15;
+  int secondItem = 23;
+  int thirdItem = 29;
+  LinkedList list = createList();
+  add_to_list(&list,&item);
+  add_to_list(&list,&secondItem);
+  add_to_list(&list,&thirdItem);
+  int *result = deleteElementAt(&list,1);
+  assert(*result == 23);
+}
