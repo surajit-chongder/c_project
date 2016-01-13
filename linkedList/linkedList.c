@@ -43,3 +43,29 @@ void forEach(LinkedList list, ElementProcessor process){
 			start = start->next;
 	}
 }
+
+void* getElementAt(LinkedList list,int index_no){
+  int count = 0;
+  Element *start = list.head;
+  if (index_no >= list.number_of_elements)
+    return NULL;
+  while( start!= NULL ) {
+    if (index_no == count)
+      return start->value;
+		start = start->next;
+    count++;
+	}
+  return NULL;
+}
+
+int indexOf(LinkedList list, void *item){
+  int count = 0;
+  Element *start = list.head;
+  while( start!= NULL ) {
+    if (start->value==item)
+      return count;
+		start = start->next;
+    count++;
+	}
+  return -1;
+}

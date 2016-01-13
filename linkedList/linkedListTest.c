@@ -73,3 +73,34 @@ void test_forEach(){
   assert(*(int *)list.tail->value == 30);
   assert(list.number_of_elements == 3);
 }
+
+void test_getElementAt(){
+  int item = 15;
+  int secondItem = 23;
+  int thirdItem = 29;
+  LinkedList list = createList();
+  add_to_list(&list,&item);
+  add_to_list(&list,&secondItem);
+  add_to_list(&list,&thirdItem);
+  int *result = getElementAt(list,1);
+  assert(*result == 23);
+  int *result2 = getElementAt(list,2);
+  assert(*result2 == 29);
+  int *result3 = getElementAt(list,3);
+  assert(result3 == NULL);
+}
+
+void test_indexOf(){
+  int searchElement = 13;
+  int item = 15;
+  int secondItem = 23;
+  int thirdItem = 29;
+  LinkedList list = createList();
+  add_to_list(&list,&item);
+  add_to_list(&list,&secondItem);
+  add_to_list(&list,&thirdItem);
+  int result = indexOf(list,&secondItem);
+  assert(result == 1);
+  int result2 = indexOf(list,&searchElement);
+  assert(result2 == -1);
+}
