@@ -73,25 +73,41 @@ int indexOf(LinkedList list, void *item){
 void * deleteElementAt(LinkedList *list, int index_no){
   int count = 0;
   Element *previous;
-  Element *temp = list->head;
-  while (temp != NULL) {
+  Element *current = list->head;
+  while (current != NULL) {
     if (index_no == count) {
       if (index_no == 0) {
-        list->head = temp->next;
+        list->head = current->next;
         (list->number_of_elements)--;
-        return temp->value;
+        return current->value;
       }
       if(index_no == list->number_of_elements-1){
         previous->next = NULL;
-        return temp->value;
+        (list->number_of_elements)--;
+        return current->value;
       }
-      previous->next = temp->next;
+      previous->next = current->next;
       (list->number_of_elements)--;
-      return temp->value;
+      return current->value;
     }
-    previous = temp;
-    temp = temp->next;
+    previous = current;
+    current = current->next;
     count++;
   }
   return NULL;
+}
+
+int asArray(LinkedList list, void **storer, int maxElements){
+  int count = 0;
+  Element *start = list.head;
+  if (count <= maxElements) {
+    while( start!= NULL ) {
+      *storer = start->value;
+  		start = start->next;
+      storer++;
+      count++;
+  	}
+    return count;
+  }
+  return 0;
 }

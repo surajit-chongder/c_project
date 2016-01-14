@@ -116,3 +116,20 @@ void test_delete_element(){
   int *result = deleteElementAt(&list,1);
   assert(*result == 23);
 }
+
+void test_asArray(){
+  int maxElements = 4;
+  int item = 15;
+  int secondItem = 23;
+  int thirdItem = 29;
+  LinkedList list = createList();
+  add_to_list(&list,&item);
+  add_to_list(&list,&secondItem);
+  add_to_list(&list,&thirdItem);
+  void* storingArray[maxElements] ;
+  int result = asArray(list,storingArray,maxElements);
+  assert(result == 3);
+  assert(15 == *(int*)storingArray[0]);
+  assert(23 == *(int*)storingArray[1]);
+  assert(29 == *(int*)storingArray[2]);
+}
