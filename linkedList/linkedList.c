@@ -111,3 +111,62 @@ int asArray(LinkedList list, void **storer, int maxElements){
   }
   return 0;
 }
+
+LinkedList  filter(LinkedList list, MatchFunc match, void *hint ){
+  LinkedList new = createList();
+  Element *start = list.head;
+  while( start!= NULL ) {
+      if(match(hint,start->value) == 1){
+        add_to_list(&new,start->value);
+      }
+      start = start->next;
+	}
+  return new;
+}
+
+void add_to_first(LinkedList *list,void *item){
+  Element *element;
+  element = (Element *)malloc(sizeof(Element));
+  element->value = item;
+  element->next = list->head;
+  if (list->head == NULL)
+    list->head = list->tail = element;
+  list->number_of_elements = ++list->number_of_elements;
+  list->head = element;
+}
+
+LinkedList reverse(LinkedList list){
+  Element *current;
+  current = list.head;
+  LinkedList new = createList();
+  while (current != NULL) {
+    add_to_first(&new,current->value);
+    current = current->next;
+  }
+  return new;
+}
+
+LinkedList map(LinkedList list, ConvertFunc convert, void *hint ){
+  LinkedList new = createList();
+  Element *current;
+  void *dest;
+  current = list.head;
+  while( current!= NULL ) {
+    dest = (void*)malloc(sizeof(void*));
+    convert(hint,current->value,dest);
+    add_to_list(&new,dest);
+    current = current->next;
+	}
+  return new;
+}
+
+
+void *reduce(LinkedList list, Reducer reduce_process, void *hint, void *initialValue){
+  LinkedList new = createList();
+  Element *current = list.head;
+  while( current!= NULL ) {
+    reduce_process(hint,initialValue,current->value);
+    current = current->next;
+	}
+  return initialValue;
+}

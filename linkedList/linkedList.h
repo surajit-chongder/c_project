@@ -8,6 +8,10 @@ typedef struct{
   int number_of_elements;
 }LinkedList;
 typedef void (*ElementProcessor)(void*);
+typedef int(MatchFunc)(void*,void*);
+typedef void(ConvertFunc)(void*,void*,void*);
+typedef void* (Reducer)(void*,void*,void*);
+
 
 
 LinkedList createList(void);
@@ -19,3 +23,7 @@ void *getElementAt(LinkedList,int);
 int indexOf(LinkedList, void *);
 void * deleteElementAt(LinkedList *, int);
 int asArray(LinkedList, void **, int);
+LinkedList  filter(LinkedList, MatchFunc, void * );
+LinkedList reverse(LinkedList);
+LinkedList map(LinkedList, ConvertFunc, void * );
+void *reduce(LinkedList, Reducer, void *, void *);
